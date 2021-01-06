@@ -71,20 +71,21 @@ create table orders(
 --grant developers to kelvin, aleks, ravi;
 
 
-GRANT CREATE ON SCHEMA quickqueue TO kelvin;
-GRANT USAGE ON SCHEMA quickqueue TO kelvin;
-
-GRANT CREATE ON SCHEMA quickqueue TO aleks;
-GRANT USAGE ON SCHEMA quickqueue TO aleks;
-
-GRANT CREATE ON SCHEMA quickqueue TO ravi;
-GRANT USAGE ON SCHEMA quickqueue TO ravi;
-
-GRANT ALL PRIVILEGES ON DATABASE quickqueue TO kelvin;
-GRANT ALL PRIVILEGES ON DATABASE quickqueue TO aleks;
-GRANT ALL PRIVILEGES ON DATABASE quickqueue TO ravi;
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO kelvin;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO aleks;
-GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO ravi;
+--this DDL works
+--GRANT CREATE ON SCHEMA quickqueue TO kelvin;
+--GRANT USAGE ON SCHEMA quickqueue TO kelvin;
+--
+--GRANT CREATE ON SCHEMA quickqueue TO aleks;
+--GRANT USAGE ON SCHEMA quickqueue TO aleks;
+--
+--GRANT CREATE ON SCHEMA quickqueue TO ravi;
+--GRANT USAGE ON SCHEMA quickqueue TO ravi;
+--
+--GRANT ALL PRIVILEGES ON DATABASE quickqueue TO kelvin;
+--GRANT ALL PRIVILEGES ON DATABASE quickqueue TO aleks;
+--GRANT ALL PRIVILEGES ON DATABASE quickqueue TO ravi;
+--
+--GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO kelvin;
+--GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO aleks;
+--GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO ravi;
 
