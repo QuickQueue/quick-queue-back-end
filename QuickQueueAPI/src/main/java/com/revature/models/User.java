@@ -2,12 +2,22 @@ package com.revature.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import com.revature.enums.UserRole;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,22 +26,30 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	int userId;
+	private int userId;
 	
-	String username;
+	private String username;
 	
-	String password;
+	private String password;
 
 	@Column(name = "first_name")
-	String firstName;
+	private String firstName;
 
 	@Column(name = "last_name")
-	String lastName;
+	private String lastName;
 	
-	String email;
+	private String email;
 
+    @Enumerated(EnumType.STRING)
 	@Column(name = "user_role")
-	UserRole userRole;
+//	@Type(type = "org.thoughts.on.java.model.EnumTypePostgreSql")
+    private UserRole userRole;
+
+//    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)
+//	@JoinColumn(referencedColumnName = "cart_id")
+	//TODO is this working??!
+	List<Cart> carts;
 
 	public User() {
 		super();
@@ -108,6 +126,7 @@ public class User {
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
+	
 	
 //	public void setReimbType(String reimbType) {
 //		for(ReimbursementType rt : ReimbursementType.values()) {
