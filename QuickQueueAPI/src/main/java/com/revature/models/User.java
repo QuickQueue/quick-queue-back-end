@@ -1,5 +1,6 @@
 package com.revature.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -49,7 +50,7 @@ public class User {
     @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)
 //	@JoinColumn(referencedColumnName = "cart_id")
 	//TODO is this working??!
-	List<Cart> carts;
+	private List<Cart> carts;
 
 	public User() {
 		super();
@@ -57,7 +58,7 @@ public class User {
 	}
 
 	public User(int userId, String username, String password, String firstName, String lastName, String email,
-			UserRole userRole) {
+			UserRole userRole, List<Cart> carts) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -66,6 +67,7 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.userRole = userRole;
+		this.carts = carts;
 	}
 
 	public int getUserId() {
@@ -119,29 +121,24 @@ public class User {
 	public UserRole getUserRole() {
 		return userRole;
 	}
-//	public String getReimbType() {
-//		return reimbType.toString();
-//	}
 
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
-	
-	
-//	public void setReimbType(String reimbType) {
-//		for(ReimbursementType rt : ReimbursementType.values()) {
-//			if(reimbType.equals(rt.toString())) {
-//				this.reimbType = rt;
-//				return;
-//			}
-//		}
-//	}
 
+	public List<Cart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(List<Cart> carts) {
+		this.carts = carts;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((carts == null) ? 0 : carts.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -161,6 +158,11 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (carts == null) {
+			if (other.carts != null)
+				return false;
+		} else if (!carts.equals(other.carts))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -196,7 +198,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRole=" + userRole + "]";
+				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRole=" + userRole + ", carts="
+				+ carts + "]";
 	}
+	
 	
 }
