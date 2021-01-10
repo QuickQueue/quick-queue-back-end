@@ -22,7 +22,6 @@ public class CartItemId implements Serializable {
 
     public CartItemId() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 

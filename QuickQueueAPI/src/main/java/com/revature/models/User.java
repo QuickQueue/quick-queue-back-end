@@ -46,7 +46,7 @@ public class User {
 //	@Type(type = "org.thoughts.on.java.model.EnumTypePostgreSql")
     private UserRole userRole;
 
-//    @OneToMany(fetch = FetchType.LAZY)
+//  @OneToMany(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)
 //	@JoinColumn(referencedColumnName = "cart_id")
 	//TODO is this working??!

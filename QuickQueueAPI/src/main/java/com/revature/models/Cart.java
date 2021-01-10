@@ -46,7 +46,7 @@ public class Cart {
 
 	public Cart() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Cart(int cartId, CartStatus cartStatus, User cartOwner, User cartShopper) {
