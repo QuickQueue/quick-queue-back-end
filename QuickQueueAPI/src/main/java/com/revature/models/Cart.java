@@ -13,7 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.revature.enums.CartStatus;
 
 @Entity
@@ -38,6 +38,7 @@ public class Cart {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cart_customer_id")
+	@JsonBackReference
 	private User cartOwner;
 
 	@ManyToOne(fetch = FetchType.LAZY)
