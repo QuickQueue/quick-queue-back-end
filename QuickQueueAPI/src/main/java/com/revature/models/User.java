@@ -15,14 +15,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.revature.enums.UserRole;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@TypeDef(
+    name = "user_role_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 public class User {
 	
 	@Id
@@ -44,6 +50,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
 	@Column(name = "user_role")
+    @Type( type = "user_role_enum" )
     private UserRole userRole;
 
     @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)

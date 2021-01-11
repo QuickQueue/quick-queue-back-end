@@ -41,5 +41,17 @@ public class UserServiceImpl implements IUserService {
 		
 		
 	}
-
+	@Override
+	public User register(User u) {
+		
+		try {
+			User newUser = ud.save(u);			
+			return newUser;
+		} catch (IllegalArgumentException iae) {
+			iae.printStackTrace();
+			throw new InternalErrorServer();
+		}
+		
+		
+	}
 }
