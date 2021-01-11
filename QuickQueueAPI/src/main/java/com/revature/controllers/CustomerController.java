@@ -33,13 +33,13 @@ public class CustomerController {
 		this.cartService = cartService;
 	}
 	
-	private static HttpSession getHttpSession() {
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+	private static HttpSession getHttpSession(boolean makeNewSession) {
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(makeNewSession);
 	}
 	
 	@PostMapping("/login") // curly braces denote it as a path variable -> when can extract the data
 	public ResponseEntity<User> logIn(@RequestBody User u){
-		HttpSession sess = getHttpSession();
+		HttpSession sess = getHttpSession(true);
 		u = us.login(u.getUsername(), u.getPassword());
 		sess.setAttribute("user", u);
 		return new ResponseEntity<User>((u), HttpStatus.OK);
@@ -49,7 +49,7 @@ public class CustomerController {
 	@PostMapping("/addItem/{itemid}/{quantity}")
 	public ResponseEntity<Cart> addItem(@PathVariable int itemid, @PathVariable int quantity){
 		//TODO check that user is logged in
-		HttpSession sess = getHttpSession();
+		HttpSession sess = getHttpSession(false);
 		if(null == sess) {
 			throw new UnauthenticatedException();
 		}
