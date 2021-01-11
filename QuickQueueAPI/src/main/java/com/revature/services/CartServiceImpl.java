@@ -1,11 +1,15 @@
 package com.revature.services;
 
 import java.sql.SQLException;
+import java.util.List;
 
+import org.hibernate.mapping.Constraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.enums.CartStatus;
+import com.revature.exceptions.CartNotFoundException;
 import com.revature.models.Cart;
 import com.revature.models.CartItem;
 import com.revature.models.CartItemId;
@@ -47,6 +51,25 @@ public class CartServiceImpl implements ICartService {
 		ci.setQuantity(ci.getQuantity() + quantity);
 		cartItemDao.save(ci);
 		return cartDao.getOne(cartId);
+	}
+
+	@Override
+	@Transactional
+	public Cart findActiveCart(int userId) {
+		try {
+			return cartDao.findActiveCart(userId);
+		} catch (SQLException e) {
+			throw new CartNotFoundException();
+		}
+	}
+
+	@Override
+	public List<Cart> findCartByStatus(int userId, CartStatus status) {
+		try {
+			return cartDao.findCartsByStatus(userId, status.toString());
+		} catch (SQLException e) {
+			throw new CartNotFoundException();
+		}
 	}
 
 }
