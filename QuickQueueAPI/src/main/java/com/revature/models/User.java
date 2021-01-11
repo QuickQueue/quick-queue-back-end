@@ -15,14 +15,22 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.revature.enums.UserRole;
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
+@TypeDef(
+    name = "user_role_enum",
+    typeClass = PostgreSQLEnumType.class
+)
 public class User {
 	
 	@Id
@@ -44,23 +52,23 @@ public class User {
 
     @Enumerated(EnumType.STRING)
 	@Column(name = "user_role")
-//	@Type(type = "org.thoughts.on.java.model.EnumTypePostgreSql")
+    @Type( type = "user_role_enum" )
     private UserRole userRole;
 
-//  @OneToMany(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)
-//	@JoinColumn(referencedColumnName = "cart_id")
-	//TODO is this working??!
-    @JsonManagedReference
-	private List<Cart> carts;
+    @JsonManagedReference(value="cartOwners")
+	private List<Cart> cartOwners;
+    
+    @OneToMany(mappedBy = "cartShopper", fetch = FetchType.LAZY)
+    @JsonManagedReference(value="cartShopper")
+	private List<Cart> cartShopper;
 
 	public User() {
-		super();
-		// TODO Auto-generated constructor stub
+		super();		
 	}
 
 	public User(int userId, String username, String password, String firstName, String lastName, String email,
-			UserRole userRole, List<Cart> carts) {
+			UserRole userRole, List<Cart> cartOwners, List<Cart> cartShopper) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -69,7 +77,8 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.userRole = userRole;
-		this.carts = carts;
+		this.cartOwners = cartOwners;
+		this.cartShopper = cartShopper;
 	}
 
 	public int getUserId() {
@@ -91,8 +100,8 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-
-	public void setPassword(String password) {
+		
+	public void setPassword(String password){	
 		this.password = password;
 	}
 
@@ -128,19 +137,28 @@ public class User {
 		this.userRole = userRole;
 	}
 
-	public List<Cart> getCarts() {
-		return carts;
+	public List<Cart> getCartOwners() {
+		return cartOwners;
 	}
 
-	public void setCarts(List<Cart> carts) {
-		this.carts = carts;
+	public void setCartOwners(List<Cart> cartOwners) {
+		this.cartOwners = cartOwners;
+	}
+
+	public List<Cart> getCartShopper() {
+		return cartShopper;
+	}
+
+	public void setCartShopper(List<Cart> cartShopper) {
+		this.cartShopper = cartShopper;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((carts == null) ? 0 : carts.hashCode());
+		result = prime * result + ((cartOwners == null) ? 0 : cartOwners.hashCode());
+		result = prime * result + ((cartShopper == null) ? 0 : cartShopper.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
@@ -160,10 +178,15 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (carts == null) {
-			if (other.carts != null)
+		if (cartOwners == null) {
+			if (other.cartOwners != null)
 				return false;
-		} else if (!carts.equals(other.carts))
+		} else if (!cartOwners.equals(other.cartOwners))
+			return false;
+		if (cartShopper == null) {
+			if (other.cartShopper != null)
+				return false;
+		} else if (!cartShopper.equals(other.cartShopper))
 			return false;
 		if (email == null) {
 			if (other.email != null)
@@ -200,9 +223,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRole=" + userRole + ", carts="
-				+ carts + "]";
+				+ firstName + ", lastName=" + lastName + ", email=" + email + ", userRole=" + userRole + ", cartOwners="
+				+ cartOwners + ", cartShopper=" + cartShopper + "]";
 	}
-	
-	
+
+		
 }

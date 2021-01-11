@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.revature.enums.UserRole;
 import com.revature.exceptions.UnauthenticatedException;
 import com.revature.models.Cart;
 import com.revature.models.User;
@@ -33,12 +35,19 @@ public class CustomerController {
 		this.cartService = cartService;
 	}
 	
+	
+	@PostMapping("/register") 
+	public ResponseEntity<User> register(@RequestBody User u) throws NoSuchAlgorithmException{
+		u.setUserRole(UserRole.CUSTOMER);
+		return new ResponseEntity<User>(us.register(u), HttpStatus.OK);
+	}
+		
 	private static HttpSession getHttpSession(boolean makeNewSession) {
 		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(makeNewSession);
 	}
 	
 	@PostMapping("/login") // curly braces denote it as a path variable -> when can extract the data
-	public ResponseEntity<User> logIn(@RequestBody User u){
+	public ResponseEntity<User> logIn(@RequestBody User u) throws NoSuchAlgorithmException{
 		HttpSession sess = getHttpSession(true);
 		u = us.login(u.getUsername(), u.getPassword());
 		sess.setAttribute("user", u);

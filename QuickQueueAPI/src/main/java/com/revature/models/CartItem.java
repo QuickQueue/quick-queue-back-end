@@ -2,26 +2,43 @@ package com.revature.models;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "cart_item")
 public class CartItem {
-	
+
 	@EmbeddedId
 	private CartItemId cartItemId;
-	
+
 	private int quantity;
+
+	@ManyToOne
+	@MapsId("cartId")
+	@JoinColumn(name = "cart_id")
+	Cart cart;
+
+	@ManyToOne
+	@MapsId("itemId")
+	@JoinColumn(name = "item_id")
+	Item item;
 
 	public CartItem() {
 		super();
 	}
 
-	public CartItem(CartItemId cartItemId, int quantity) {
+	public CartItem(CartItemId cartItemId, int quantity, Cart cart, Item item) {
 		super();
 		this.cartItemId = cartItemId;
 		this.quantity = quantity;
+		this.cart = cart;
+		this.item = item;
 	}
+	
+	
 
 	public CartItemId getCartItemId() {
 		return cartItemId;
@@ -39,11 +56,29 @@ public class CartItem {
 		this.quantity = quantity;
 	}
 
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cart == null) ? 0 : cart.hashCode());
 		result = prime * result + ((cartItemId == null) ? 0 : cartItemId.hashCode());
+		result = prime * result + ((item == null) ? 0 : item.hashCode());
 		result = prime * result + quantity;
 		return result;
 	}
@@ -57,10 +92,20 @@ public class CartItem {
 		if (getClass() != obj.getClass())
 			return false;
 		CartItem other = (CartItem) obj;
+		if (cart == null) {
+			if (other.cart != null)
+				return false;
+		} else if (!cart.equals(other.cart))
+			return false;
 		if (cartItemId == null) {
 			if (other.cartItemId != null)
 				return false;
 		} else if (!cartItemId.equals(other.cartItemId))
+			return false;
+		if (item == null) {
+			if (other.item != null)
+				return false;
+		} else if (!item.equals(other.item))
 			return false;
 		if (quantity != other.quantity)
 			return false;
@@ -69,7 +114,10 @@ public class CartItem {
 
 	@Override
 	public String toString() {
-		return "CartItem [cartItemId=" + cartItemId + ", quantity=" + quantity + "]";
+		return "CartItem [cartItemId=" + cartItemId + ", quantity=" + quantity + ", cart=" + cart + ", item=" + item
+				+ "]";
 	}
+
+	
 
 }
