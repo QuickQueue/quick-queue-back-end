@@ -29,9 +29,8 @@ create table carts(
 
 --write check makes sure everyy user has only 1 active cart
 
-
 create table items(
-	item_id serial primary key
+	item_id integer primary key
 );
 
 create table cart_item(

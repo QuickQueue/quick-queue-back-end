@@ -15,7 +15,6 @@ public class CartItem {
 
 	public CartItem() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public CartItem(CartItemId cartItemId, int quantity) {

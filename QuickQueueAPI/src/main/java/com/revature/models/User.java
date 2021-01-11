@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.revature.enums.UserRole;
 
 import java.util.List;
@@ -46,10 +47,11 @@ public class User {
 //	@Type(type = "org.thoughts.on.java.model.EnumTypePostgreSql")
     private UserRole userRole;
 
-//    @OneToMany(fetch = FetchType.LAZY)
+//  @OneToMany(fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)
 //	@JoinColumn(referencedColumnName = "cart_id")
 	//TODO is this working??!
+    @JsonManagedReference
 	private List<Cart> carts;
 
 	public User() {
