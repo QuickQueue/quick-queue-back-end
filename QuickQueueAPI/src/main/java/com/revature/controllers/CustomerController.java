@@ -1,7 +1,5 @@
 package com.revature.controllers;
 
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.revature.enums.UserRole;
 import com.revature.models.User;
 import com.revature.services.IUserService;
 
@@ -27,6 +27,7 @@ public class CustomerController {
 	@PostMapping("/login") // curly braces denote it as a path variable -> when can extract the data
 	public ResponseEntity<User> logIn(@RequestBody User u){
 
+		u.getUserRole();
 		return new ResponseEntity<User>(us.login(u.getUsername(), u.getPassword()), HttpStatus.OK);
 
 	}

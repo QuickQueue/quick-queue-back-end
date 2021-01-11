@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ErrorController {
 
 	public ErrorController() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }

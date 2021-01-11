@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.revature.enums.CartStatus;
 
 @Entity
@@ -27,7 +30,7 @@ public class Cart {
 
 //	@Column(name = "cart_customer_id")
 //	int cartCustomerId;
-
+//
 //	@Column(name = "cart_shopper_id")
 //	int cartShopperId;
 
@@ -37,16 +40,24 @@ public class Cart {
     private CartStatus cartStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cart_customer_id")
+	//@JoinColumn(name = "cart_customer_id")
+	@JoinColumn(name = "cart_customer_id",referencedColumnName = "user_id")
+	@JsonBackReference
 	private User cartOwner;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cart_shopper_id")
+	//@JoinColumn(name = "cart_shopper_id")
+	@JoinColumn(name = "cart_shopper_id",referencedColumnName = "user_id")
+	//@JsonBackReference
 	private User cartShopper;
 
+	@OneToMany(mappedBy="cart",fetch = FetchType.LAZY)
+	List<CartItem> cartItems;
+	
+	
+	
 	public Cart() {
-		super();
-		
+		super();	
 	}
 
 	public Cart(int cartId, CartStatus cartStatus, User cartOwner, User cartShopper) {

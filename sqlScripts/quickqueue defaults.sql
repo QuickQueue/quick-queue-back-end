@@ -1,5 +1,5 @@
---drop schema if exists quickqueue cascade;
---create schema quickqueue;
+drop schema if exists quickqueue cascade;
+create schema quickqueue;
 set schema 'quickqueue';
 
 create type "user-role" as enum('SHOPPER','CUSTOMER');
@@ -95,7 +95,8 @@ GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA quickqueue TO ravi;
 
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA quickqueue TO kelvin;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA quickqueue TO aleks;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA quickqueue TO ravi;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA quickqueue TO ravi
+;
 --GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO kelvin;
 --GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO aleks;
 --GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA quickqueue TO aleks;
