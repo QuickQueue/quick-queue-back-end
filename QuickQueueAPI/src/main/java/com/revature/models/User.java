@@ -217,7 +217,5 @@ public class User {
 				+ cartOwners + ", cartShopper=" + cartShopper + "]";
 	}
 
-	
-	
-	
+		
 }
