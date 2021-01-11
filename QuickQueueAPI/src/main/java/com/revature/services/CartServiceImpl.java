@@ -43,8 +43,9 @@ public class CartServiceImpl implements ICartService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		cartItemDao.save(new CartItem(new CartItemId(cartId, itemId), quantity, null, null));
+		CartItem ci = cartItemDao.getOne(new CartItemId(cartId, itemId));
+		ci.setQuantity(ci.getQuantity() + quantity);
+		cartItemDao.save(ci);
 		return cartDao.getOne(cartId);
 	}
 
