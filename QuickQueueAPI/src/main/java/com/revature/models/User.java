@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.revature.enums.UserRole;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Entity
@@ -98,8 +100,8 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
-
-	public void setPassword(String password) {
+		
+	public void setPassword(String password){	
 		this.password = password;
 	}
 

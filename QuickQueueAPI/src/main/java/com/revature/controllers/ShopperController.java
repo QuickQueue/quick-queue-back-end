@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +27,12 @@ public class ShopperController {
 	}
 	
 	@PostMapping("/login") 
-	public ResponseEntity<User> logIn(@RequestBody User u){
+	public ResponseEntity<User> logIn(@RequestBody User u) throws NoSuchAlgorithmException{
 		return new ResponseEntity<User>(us.login(u.getUsername(), u.getPassword()), HttpStatus.OK);
 	}
 	
 	@PostMapping("/register") 
-	public ResponseEntity<User> register(@RequestBody User u){
+	public ResponseEntity<User> register(@RequestBody User u) throws NoSuchAlgorithmException{
 		u.setUserRole(UserRole.SHOPPER);
 		return new ResponseEntity<User>(us.register(u), HttpStatus.OK);
 	}
