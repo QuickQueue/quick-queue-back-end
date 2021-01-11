@@ -1,5 +1,6 @@
 set schema 'quickqueue';
 select * FROM items;
+select * FROM cart_item;
 select * FROM users;
 select * FROM carts;
 
