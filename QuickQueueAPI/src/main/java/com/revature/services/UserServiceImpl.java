@@ -25,8 +25,8 @@ public class UserServiceImpl implements IUserService {
 		try {
 			User u = ud.findUserbyUsernameAndPassword(username, password);
 			if(u!=null) {
-				//u.setCartOwners(null);
-				//u.setCartShopper(null);
+				u.setCartOwners(null);
+				u.setCartShopper(null);
 				u.setPassword(null);
 				return u;
 			}

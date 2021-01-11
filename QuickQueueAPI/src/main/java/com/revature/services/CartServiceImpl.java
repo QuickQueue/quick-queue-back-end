@@ -44,7 +44,7 @@ public class CartServiceImpl implements ICartService {
 			e.printStackTrace();
 		}
 		
-		cartItemDao.save(new CartItem(new CartItemId(cartId, itemId), quantity));
+		cartItemDao.save(new CartItem(new CartItemId(cartId, itemId), quantity, null, null));
 		return cartDao.getOne(cartId);
 	}
 

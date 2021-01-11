@@ -37,6 +37,8 @@ public class CartItem {
 		this.cart = cart;
 		this.item = item;
 	}
+	
+	
 
 	public CartItemId getCartItemId() {
 		return cartItemId;

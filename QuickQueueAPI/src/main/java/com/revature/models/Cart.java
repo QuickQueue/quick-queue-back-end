@@ -28,27 +28,20 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartId;
 
-//	@Column(name = "cart_customer_id")
-//	int cartCustomerId;
-//
-//	@Column(name = "cart_shopper_id")
-//	int cartShopperId;
-
     @Enumerated(EnumType.STRING)
 	@Column(name = "cart_status")
 //	@Type(type = "org.thoughts.on.java.model.EnumTypePostgreSql")
     private CartStatus cartStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@JoinColumn(name = "cart_customer_id")
 	@JoinColumn(name = "cart_customer_id",referencedColumnName = "user_id")
-	@JsonBackReference
+	@JsonBackReference(value="cartOwners")
 	private User cartOwner;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	//@JoinColumn(name = "cart_shopper_id")
 	@JoinColumn(name = "cart_shopper_id",referencedColumnName = "user_id")
-	//@JsonBackReference
+	@JsonBackReference(value="cartShopper")
 	private User cartShopper;
 
 	@OneToMany(mappedBy="cart",fetch = FetchType.LAZY)

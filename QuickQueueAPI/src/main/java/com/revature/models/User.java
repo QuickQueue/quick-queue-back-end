@@ -47,10 +47,11 @@ public class User {
     private UserRole userRole;
 
     @OneToMany(mappedBy = "cartOwner", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value="cartOwners")
 	private List<Cart> cartOwners;
     
     @OneToMany(mappedBy = "cartShopper", fetch = FetchType.LAZY)
+    @JsonManagedReference(value="cartShopper")
 	private List<Cart> cartShopper;
 
 	public User() {
