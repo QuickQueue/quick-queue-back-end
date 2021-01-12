@@ -30,12 +30,13 @@ public class CartItem {
 		super();
 	}
 
-	public CartItem(CartItemId cartItemId, int quantity, Cart cart, Item item) {
+	public CartItem(int quantity, Cart cart, Item item) {
 		super();
-		this.cartItemId = cartItemId;
+//		this.cartItemId = cartItemId;
 		this.quantity = quantity;
 		this.cart = cart;
 		this.item = item;
+        this.cartItemId = new CartItemId(cart.getCartId(), item.getItemId());
 	}
 	
 	
