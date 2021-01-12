@@ -11,10 +11,10 @@ import com.revature.models.Cart;
 
 public interface ICartDao extends JpaRepository<Cart, Integer> {
 
-	 @Query("select c FROM Cart c where (c.cartId = ?1 and c.cartStatus = 'ACTIVE')")	
+	 @Query("select c FROM Cart c where (c.cartOwner.userId = ?1 and c.cartStatus = 'ACTIVE')")	
 	 public Cart findActiveCart(int userId) throws SQLException;
 
 	 //com.revature.enums.CartStatus
-	 @Query("select c FROM Cart c where (c.cartId = ?1 and cast( c.cartStatus as string) = ?2)")	
+	 @Query("select c FROM Cart c where (c.cartOwner.userId = ?1 and cast( c.cartStatus as string) = ?2)")	
 	 public List<Cart> findCartsByStatus(int userId, String status) throws SQLException;
 }
