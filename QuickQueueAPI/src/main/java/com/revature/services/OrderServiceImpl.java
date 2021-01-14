@@ -1,33 +1,51 @@
 package com.revature.services;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.revature.enums.OrderStatus;
+import com.revature.exceptions.OrderNotFoundException;
 import com.revature.models.Order;
 import com.revature.models.User;
+import com.revature.repositories.IOrderDao;
 
 public class OrderServiceImpl implements IOrderService{
-
-	@Override
-	public Order addOrder(int orderId, BigDecimal orderNetAmount, BigDecimal order_gross_amount,
-			BigDecimal order_tax_amount, Timestamp orderSubmitted, String orderAdditionalInstructions,
-			User orderCustomer) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	IOrderDao orderDao;
+	
+	@Autowired
+	public OrderServiceImpl(IOrderDao orderDao) {
+		
+		this.orderDao = orderDao;
+		
 	}
 
 	@Override
-	public Order changeOrderStatus(int orderId, User shoppderId, OrderStatus status) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public Order addOrder(Order o) {
+		
+		return orderDao.save(o);
+		
 	}
 
 	@Override
-	public List<Order> findByStatus(User orderCustomer, OrderStatus status) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Order> findOrderByStatus(User orderCustomer, OrderStatus status) {		
+		
+		return orderDao.findOrderByStatus(orderCustomer.getUserId(), status.toString());
+	
+	}
+
+	@Override
+	public Order updateOrderStatus(Order o) {
+		
+		return orderDao.save(o);
+		
 	}
 
 }
