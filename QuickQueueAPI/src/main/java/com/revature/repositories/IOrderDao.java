@@ -9,7 +9,7 @@ import com.revature.models.Order;
 
 public interface IOrderDao extends JpaRepository<Order, Integer>{
 
-	@Query("select o FROM Order o where (o.orderShopper = ?1 and cast (o.orderStatus as string) = ?2)")
-	public List<Order> findOrderByStatus(int orderCustomer, String status);
+	@Query("select o FROM Order o where (o.orderCustomer.userId = ?1 and cast (o.orderStatus as string) = ?2)")
+	public List<Order> findOrderByStatus(int customerId, String status);
 	
 }
