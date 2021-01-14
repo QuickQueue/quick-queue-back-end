@@ -45,11 +45,11 @@ public class Order {
 	@Column(name = "order_additional_instructions")
 	private String orderAdditionalInstructions;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_customer")
 	private User orderCustomer;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_shopper")
 	private User orderShopper;
 
@@ -57,7 +57,7 @@ public class Order {
 	@Column(name = "order_status")
 	private OrderStatus orderStatus;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
 	private Cart orderCart;
 
