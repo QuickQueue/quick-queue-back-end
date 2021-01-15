@@ -25,7 +25,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "order_id")
-	private int userId;
+	private int orderId;
 	
 	@Column(name = "order_net_amount")
 	private BigDecimal orderNetAmount;
@@ -45,11 +45,11 @@ public class Order {
 	@Column(name = "order_additional_instructions")
 	private String orderAdditionalInstructions;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_customer")
 	private User orderCustomer;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "order_shopper")
 	private User orderShopper;
 
@@ -57,7 +57,7 @@ public class Order {
 	@Column(name = "order_status")
 	private OrderStatus orderStatus;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
 	private Cart orderCart;
 
@@ -66,11 +66,11 @@ public class Order {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Order(int userId, BigDecimal orderNetAmount, BigDecimal order_gross_amount, BigDecimal order_tax_amount,
+	public Order(int orderId, BigDecimal orderNetAmount, BigDecimal order_gross_amount, BigDecimal order_tax_amount,
 			Timestamp orderSubmitted, Timestamp orderResolved, String orderAdditionalInstructions, User orderCustomer,
 			User orderShopper, OrderStatus orderStatus, Cart orderCart) {
 		super();
-		this.userId = userId;
+		this.orderId = orderId;
 		this.orderNetAmount = orderNetAmount;
 		this.order_gross_amount = order_gross_amount;
 		this.order_tax_amount = order_tax_amount;
@@ -83,12 +83,12 @@ public class Order {
 		this.orderCart = orderCart;
 	}
 
-	public int getUserId() {
-		return userId;
+	public int getOrderId() {
+		return orderId;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 
 	public BigDecimal getOrderNetAmount() {
@@ -185,7 +185,7 @@ public class Order {
 		result = prime * result + ((orderSubmitted == null) ? 0 : orderSubmitted.hashCode());
 		result = prime * result + ((order_gross_amount == null) ? 0 : order_gross_amount.hashCode());
 		result = prime * result + ((order_tax_amount == null) ? 0 : order_tax_amount.hashCode());
-		result = prime * result + userId;
+		result = prime * result + orderId;
 		return result;
 	}
 
@@ -245,14 +245,14 @@ public class Order {
 				return false;
 		} else if (!order_tax_amount.equals(other.order_tax_amount))
 			return false;
-		if (userId != other.userId)
+		if (orderId != other.orderId)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [userId=" + userId + ", orderNetAmount=" + orderNetAmount + ", order_gross_amount="
+		return "Order [orderId=" + orderId + ", orderNetAmount=" + orderNetAmount + ", order_gross_amount="
 				+ order_gross_amount + ", order_tax_amount=" + order_tax_amount + ", orderSubmitted=" + orderSubmitted
 				+ ", orderResolved=" + orderResolved + ", orderAdditionalInstructions=" + orderAdditionalInstructions
 				+ ", orderCustomer=" + orderCustomer + ", orderShopper=" + orderShopper + ", orderStatus=" + orderStatus
