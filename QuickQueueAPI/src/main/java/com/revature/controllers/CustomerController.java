@@ -42,28 +42,21 @@ public class CustomerController {
 		return new ResponseEntity<User>(us.register(u), HttpStatus.OK);
 	}
 		
-	private static HttpSession getHttpSession(boolean makeNewSession) {
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(makeNewSession);
-	}
-	
 	@PostMapping("/login") // curly braces denote it as a path variable -> when can extract the data
 	public ResponseEntity<User> logIn(@RequestBody User u) throws NoSuchAlgorithmException{
-		HttpSession sess = getHttpSession(true);
 		u = us.login(u.getUsername(), u.getPassword());
-		sess.setAttribute("user", u);
-		System.out.println(sess.getId());
 		return new ResponseEntity<User>((u), HttpStatus.OK);
 
 	}
 	
-	@PostMapping("/addItem/{itemid}/{quantity}")
-	public ResponseEntity<Cart> addItem(@PathVariable int itemid, @PathVariable int quantity){
+	@PostMapping("/addItem/{itemid}/{quantity}/{userId}")
+	public ResponseEntity<Cart> addItem(@PathVariable int itemid, @PathVariable int quantity, @PathVariable int userId){
 		//TODO check that user is logged in
-		HttpSession sess = getHttpSession(false);
-		if(null == sess) {
+		User u = us.getUser(userId);
+		if(u == null) {
 			throw new UnauthenticatedException();
 		}
-		int userid = ((User) sess.getAttribute("user")).getUserId();
+		int userid = u.getUserId();
 		return new ResponseEntity<Cart>(cartService.addItem(itemid, userid, quantity), HttpStatus.OK);
 
 	}
