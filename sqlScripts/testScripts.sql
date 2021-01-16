@@ -24,3 +24,5 @@ insert into carts (cart_customer_id, cart_shopper_id, cart_status)
 values (1, null, 'ACTIVE');
 
 select * FROM carts where (carts.cart_id = 1 and carts.cart_status = 'ACTIVE')
+
+delete from carts where (carts.cart_id > 3 and carts.cart_id < 39)

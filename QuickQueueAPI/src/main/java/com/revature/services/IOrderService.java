@@ -9,9 +9,11 @@ import com.revature.models.User;
 public interface IOrderService {
 
 	Order addOrder(Order o);
-	
-	Order updateOrderStatus(Order o);
 
+	Order updateOrderStatus(Order o);
+	
+	Order submitOrder(Order o, User u);
+	
 	List<Order> findOrderByStatus(User orderCustomer, OrderStatus status);
 
 }

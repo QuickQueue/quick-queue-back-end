@@ -17,4 +17,7 @@ public interface ICartDao extends JpaRepository<Cart, Integer> {
 	 //com.revature.enums.CartStatus
 	 @Query("select c FROM Cart c where (c.cartOwner.userId = ?1 and cast( c.cartStatus as string) = ?2)")	
 	 public List<Cart> findCartsByStatus(int userId, String status) throws SQLException;
+	 
+	 
+
 }

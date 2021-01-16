@@ -3,6 +3,7 @@ package com.revature.models;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
 
 import com.revature.enums.OrderStatus;
 
@@ -55,9 +58,10 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
 	@Column(name = "order_status")
+	@Type(type = "com.revature.enums.PosgreSQLEnumtype")
 	private OrderStatus orderStatus;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "cart_id")
 	private Cart orderCart;
 
