@@ -74,7 +74,7 @@ public class OrderController {
 	public ResponseEntity<List<Order>> getActiveOrders(@PathVariable int userId) {
 		
 		User u = us.getUser(userId);
-		Hibernate.initialize(u);
+
 		if(u == null) {
 			throw new UnauthenticatedException();
 		}

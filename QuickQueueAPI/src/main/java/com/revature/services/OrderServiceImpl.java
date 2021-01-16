@@ -48,10 +48,8 @@ public class OrderServiceImpl implements IOrderService{
 	@Override
 	public List<Order> findOrderByStatus(User orderCustomer, OrderStatus status) {		
 		
-		// Hibernate.unproxy(orderCustomer);
-		orderCustomer.getEmail();
-		List<Order> o = orderDao.findOrderByStatus(orderCustomer.getUserId(), status.toString());
-		return o;
+		return orderDao.findOrderByStatus(orderCustomer.getUserId(), status.toString());
+
 	}
 
 	@Override
