@@ -45,6 +45,7 @@ public class CartContoller {
 	public ResponseEntity<Cart> getActiveCart(){
 		HttpSession sess = getHttpSession(false);
 		User u = (User) sess.getAttribute("user");
+		Cart c = cartService.findActiveCart(u.getUserId());
 		return new ResponseEntity<Cart>(cartService.findActiveCart(u.getUserId()), HttpStatus.OK);
 
 	}

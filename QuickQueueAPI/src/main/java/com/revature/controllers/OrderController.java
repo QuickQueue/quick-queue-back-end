@@ -17,6 +17,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.revature.enums.OrderStatus;
+import com.revature.exceptions.OrderNotFoundException;
 import com.revature.exceptions.UnauthenticatedException;
 import com.revature.exceptions.UrlMismatchException;
 import com.revature.models.Order;
@@ -56,7 +57,7 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/history/pending")
+	@GetMapping("/history/pending/{userId}")
 	public ResponseEntity<List<Order>> getPendingOrders() {
 		
 		HttpSession sess = getHttpSession(false);
@@ -65,7 +66,7 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/history/active")
+	@GetMapping("/history/active/{userId}")
 	public ResponseEntity<List<Order>> getActiveOrders() {
 		
 		HttpSession sess = getHttpSession(false);
@@ -74,7 +75,7 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/history/closed")
+	@GetMapping("/history/closed/{userId}")
 	public ResponseEntity<List<Order>> getClosedOrders() {
 		
 		HttpSession sess = getHttpSession(false);
@@ -89,11 +90,30 @@ public class OrderController {
 		HttpSession sess = getHttpSession(false);
 		if(null == sess) {
 			throw new UnauthenticatedException();
-		} else if (o.getOrderId() == orderId) {
+		} else if (o.getOrderId() != orderId) {
 			throw new UrlMismatchException();
 		} 
 		
 		return new ResponseEntity<Order>(os.updateOrderStatus(o), HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/submit/{orderId}")
+	public ResponseEntity<Order> submitOrder(@RequestBody Order o, @PathVariable int orderId) {
+		
+		HttpSession sess = getHttpSession(false);
+		User u = ((User)sess.getAttribute("user"));
+		if(null == sess || u == null) {
+			throw new UnauthenticatedException();
+		} else if (o.getOrderId() != orderId) {
+			throw new UrlMismatchException();
+		} else if (o.getOrderCustomer().getUserId() != u.getUserId()) {
+			throw new UrlMismatchException();
+		}
+		
+		o = os.submitOrder(o, u);
+		o.getOrderCustomer().setPassword(null);
+		return new ResponseEntity<Order>(o, HttpStatus.OK);
 		
 	}
 	

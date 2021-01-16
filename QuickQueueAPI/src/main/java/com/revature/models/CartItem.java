@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "cart_item")
 public class CartItem {
@@ -19,6 +21,7 @@ public class CartItem {
 	@ManyToOne
 	@MapsId("cartId")
 	@JoinColumn(name = "cart_id")
+	@JsonBackReference(value="cartItems")
 	Cart cart;
 
 	@ManyToOne
