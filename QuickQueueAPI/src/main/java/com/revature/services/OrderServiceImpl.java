@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,8 +48,10 @@ public class OrderServiceImpl implements IOrderService{
 	@Override
 	public List<Order> findOrderByStatus(User orderCustomer, OrderStatus status) {		
 		
-		return orderDao.findOrderByStatus(orderCustomer.getUserId(), status.toString());
-	
+		// Hibernate.unproxy(orderCustomer);
+		orderCustomer.getEmail();
+		List<Order> o = orderDao.findOrderByStatus(orderCustomer.getUserId(), status.toString());
+		return o;
 	}
 
 	@Override
