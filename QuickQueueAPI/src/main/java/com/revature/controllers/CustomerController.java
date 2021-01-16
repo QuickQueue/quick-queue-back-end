@@ -51,6 +51,7 @@ public class CustomerController {
 		HttpSession sess = getHttpSession(true);
 		u = us.login(u.getUsername(), u.getPassword());
 		sess.setAttribute("user", u);
+		System.out.println(sess.getId());
 		return new ResponseEntity<User>((u), HttpStatus.OK);
 
 	}

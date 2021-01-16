@@ -57,7 +57,7 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/history/pending")
+	@GetMapping("/history/pending/{userId}")
 	public ResponseEntity<List<Order>> getPendingOrders() {
 		
 		HttpSession sess = getHttpSession(false);
@@ -66,7 +66,7 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/history/active")
+	@GetMapping("/history/active/{userId}")
 	public ResponseEntity<List<Order>> getActiveOrders() {
 		
 		HttpSession sess = getHttpSession(false);
@@ -75,7 +75,7 @@ public class OrderController {
 		
 	}
 	
-	@GetMapping("/history/closed")
+	@GetMapping("/history/closed/{userId}")
 	public ResponseEntity<List<Order>> getClosedOrders() {
 		
 		HttpSession sess = getHttpSession(false);
