@@ -93,5 +93,10 @@ public class UserServiceImpl implements IUserService {
 	        }
 	        return generatedPassword;
 	    }
+
+	@Override
+	public User getUser(int userId) {
+		return ud.getOne(userId);
+	}
 	
 }
