@@ -10,4 +10,5 @@ public interface IUserService {
 
 	public User login(String username, String password) throws NoSuchAlgorithmException;
 	public User register(User u) throws NoSuchAlgorithmException;
+	public User getUser(int userId);
 }

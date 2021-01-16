@@ -23,34 +23,32 @@ import com.revature.exceptions.UrlMismatchException;
 import com.revature.models.Order;
 import com.revature.models.User;
 import com.revature.services.IOrderService;
+import com.revature.services.IUserService;
 
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
 	
 	private IOrderService os;
+	private IUserService us;
 	
 	@Autowired
-	public OrderController(IOrderService os) {
-			
+	public OrderController(IOrderService os, IUserService us) {
 		this.os = os;
+		this.us = us;
 		
 	}
 	
-	private static HttpSession getHttpSession(boolean makeNewSession) {
+	@PostMapping("/submit/{userId}")
+	public ResponseEntity<Order> submitNewOrder(@RequestBody Order o, @PathVariable int userId) {
 		
-		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession(makeNewSession);
-		
-	}
-	
-	@PostMapping("/submit")
-	public ResponseEntity<Order> submitNewOrder(@RequestBody Order o) {
-		
-		HttpSession sess = getHttpSession(false);
-		User u = (User) sess.getAttribute("user");
+		User u = us.getUser(userId);
+		if(u == null) {
+			throw new UnauthenticatedException();
+		}
 		if (!o.getOrderCustomer().equals(u)) {
 				
-			throw new UnauthenticatedException();
+			throw new UrlMismatchException();
 			
 		}
 		return new ResponseEntity<Order>(os.addOrder(o), HttpStatus.OK);
@@ -58,39 +56,45 @@ public class OrderController {
 	}
 	
 	@GetMapping("/history/pending/{userId}")
-	public ResponseEntity<List<Order>> getPendingOrders() {
+	public ResponseEntity<List<Order>> getPendingOrders(@PathVariable int userId) {
 		
-		HttpSession sess = getHttpSession(false);
-		User u = (User) sess.getAttribute("user");
+		User u = us.getUser(userId);
+		if(u == null) {
+			throw new UnauthenticatedException();
+		}
 		return new ResponseEntity<List<Order>>(os.findOrderByStatus(u, OrderStatus.PENDING), HttpStatus.OK);
 		
 	}
 	
 	@GetMapping("/history/active/{userId}")
-	public ResponseEntity<List<Order>> getActiveOrders() {
+	public ResponseEntity<List<Order>> getActiveOrders(@PathVariable int userId) {
 		
-		HttpSession sess = getHttpSession(false);
-		User u = (User) sess.getAttribute("user");
+		User u = us.getUser(userId);
+		if(u == null) {
+			throw new UnauthenticatedException();
+		}
 		return new ResponseEntity<List<Order>>(os.findOrderByStatus(u, OrderStatus.ACTIVE), HttpStatus.OK);
 		
 	}
 	
 	@GetMapping("/history/closed/{userId}")
-	public ResponseEntity<List<Order>> getClosedOrders() {
+	public ResponseEntity<List<Order>> getClosedOrders(@PathVariable int userId) {
 		
-		HttpSession sess = getHttpSession(false);
-		User u = (User) sess.getAttribute("user");
+		User u = us.getUser(userId);
+		if(u == null) {
+			throw new UnauthenticatedException();
+		}
 		return new ResponseEntity<List<Order>>(os.findOrderByStatus(u, OrderStatus.CLOSED), HttpStatus.OK);
 		
 	}
 	
-	@PostMapping("/{orderId}")
-	public ResponseEntity<Order> updateOrderStatus(@RequestBody Order o, @PathVariable int orderId) {
+	@PostMapping("/{orderId}/{userId}")
+	public ResponseEntity<Order> updateOrderStatus(@RequestBody Order o, @PathVariable int orderId, @PathVariable int userId) {
 		
-		HttpSession sess = getHttpSession(false);
-		if(null == sess) {
+		User u = us.getUser(userId);
+		if(u == null) {
 			throw new UnauthenticatedException();
-		} else if (o.getOrderId() != orderId) {
+		}else if (o.getOrderId() != orderId) {
 			throw new UrlMismatchException();
 		} 
 		
@@ -98,12 +102,11 @@ public class OrderController {
 		
 	}
 	
-	@PostMapping("/submit/{orderId}")
-	public ResponseEntity<Order> submitOrder(@RequestBody Order o, @PathVariable int orderId) {
+	@PostMapping("/submit/{orderId}/{userId}")
+	public ResponseEntity<Order> submitOrder(@RequestBody Order o, @PathVariable int orderId, @PathVariable int userId) {
 		
-		HttpSession sess = getHttpSession(false);
-		User u = ((User)sess.getAttribute("user"));
-		if(null == sess || u == null) {
+		User u = us.getUser(userId);
+		if(u == null) {
 			throw new UnauthenticatedException();
 		} else if (o.getOrderId() != orderId) {
 			throw new UrlMismatchException();
