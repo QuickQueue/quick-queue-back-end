@@ -61,10 +61,12 @@ public class OrderServiceImpl implements IOrderService{
 	@Override
 	@Transactional
 	public Order submitOrder(Order o, User u) {
+		o.setOrderId(0);
 		o.setOrderStatus(OrderStatus.ACTIVE);
 		o.getOrderCart().setCartStatus(CartStatus.SUBMITTED);
 		o.getOrderCart().setCartOwner(u);
 		cartDao.save(new Cart(0, CartStatus.ACTIVE, o.getOrderCustomer(), null, null));
+		
 		return orderDao.save(o);
 		
 	}

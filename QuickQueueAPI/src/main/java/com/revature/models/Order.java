@@ -61,13 +61,12 @@ public class Order {
 	@Type(type = "com.revature.enums.PosgreSQLEnumtype")
 	private OrderStatus orderStatus;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "cart_id")
 	private Cart orderCart;
 
 	public Order() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Order(int orderId, BigDecimal orderNetAmount, BigDecimal order_gross_amount, BigDecimal order_tax_amount,

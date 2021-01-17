@@ -18,13 +18,9 @@ public class CartItemId implements Serializable {
 	@Column(name = "item_id")
     private int itemId;
 
-
-
     public CartItemId() {
 		super();
 	}
-
-
 
 	public CartItemId(int cartId, int itemId) {
         this.cartId = cartId;
