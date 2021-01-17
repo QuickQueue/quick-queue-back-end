@@ -3,7 +3,9 @@ package com.revature.controllers;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +58,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/history/pending/{userId}")
+	@Transactional
 	public ResponseEntity<List<Order>> getPendingOrders(@PathVariable int userId) {
 		
 		User u = us.getUser(userId);
@@ -67,9 +70,11 @@ public class OrderController {
 	}
 	
 	@GetMapping("/history/active/{userId}")
+	@Transactional
 	public ResponseEntity<List<Order>> getActiveOrders(@PathVariable int userId) {
 		
 		User u = us.getUser(userId);
+
 		if(u == null) {
 			throw new UnauthenticatedException();
 		}
@@ -78,6 +83,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/history/closed/{userId}")
+	@Transactional
 	public ResponseEntity<List<Order>> getClosedOrders(@PathVariable int userId) {
 		
 		User u = us.getUser(userId);

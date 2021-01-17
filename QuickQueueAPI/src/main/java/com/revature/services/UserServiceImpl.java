@@ -96,7 +96,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public User getUser(int userId) {
-		return ud.getOne(userId);
+		return ud.findById(userId).get();
 	}
 	
 }
