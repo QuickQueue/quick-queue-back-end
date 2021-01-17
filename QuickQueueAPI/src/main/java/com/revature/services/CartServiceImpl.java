@@ -25,15 +25,17 @@ import com.revature.repositories.IUserDao;
 public class CartServiceImpl implements ICartService {
 
 	ICartDao cartDao;
-//	IUserDao userDao;
+    IUserDao userDao;
 	IItemDao itemDao;
 	ICartItemDao cartItemDao;
+	
 
 	@Autowired
-	public CartServiceImpl(ICartDao cartDao, IItemDao itemDao, ICartItemDao cartItemDao) {
+	public CartServiceImpl(ICartDao cartDao, IItemDao itemDao, ICartItemDao cartItemDao,IUserDao userDao) {
 		this.cartDao = cartDao;
 		this.itemDao = itemDao;
 		this.cartItemDao = cartItemDao;
+		this.userDao = userDao;
 	}
 
 	@Override
@@ -44,12 +46,18 @@ public class CartServiceImpl implements ICartService {
 		if (!itemDao.existsById(itemId)) {
 			i = itemDao.save(new Item(itemId));
 		}else {
-			i = itemDao.getOne(itemId);
+			i = itemDao.findById(itemId).get();
 		}
 		Cart c;
 		try {
 			System.out.println("userId: " + userId);
 			c = cartDao.findActiveCart(userId);
+			if(c==null) {
+				System.out.println(c);
+				//User u = 
+				c = cartDao.save(new Cart(0,CartStatus.ACTIVE,userDao.findById(userId).get(),null,null));
+             
+			}
 		} catch (SQLException e) {
 			throw new CartNotFoundException();
 		}
@@ -64,7 +72,7 @@ public class CartServiceImpl implements ICartService {
 			ci.setQuantity(ci.getQuantity() + quantity);
 			cartItemDao.save(ci);
 		}
-		return cartDao.getOne(c.getCartId());
+		return cartDao.findById(c.getCartId()).get();
 	}
 
 	@Override

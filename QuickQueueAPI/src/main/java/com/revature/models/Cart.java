@@ -46,7 +46,7 @@ public class Cart {
 	@JsonBackReference(value="cartShopper")
 	private User cartShopper;
 
-	@OneToMany(mappedBy="cart",fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="cart",fetch = FetchType.EAGER)
     @JsonManagedReference(value="cartItems")
 	List<CartItem> cartItems;
 	

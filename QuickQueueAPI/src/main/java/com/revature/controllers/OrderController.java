@@ -41,21 +41,21 @@ public class OrderController {
 		
 	}
 	
-	@PostMapping("/submit/{userId}")
-	public ResponseEntity<Order> submitNewOrder(@RequestBody Order o, @PathVariable int userId) {
-		
-		User u = us.getUser(userId);
-		if(u == null) {
-			throw new UnauthenticatedException();
-		}
-		if (!o.getOrderCustomer().equals(u)) {
-				
-			throw new UrlMismatchException();
-			
-		}
-		return new ResponseEntity<Order>(os.addOrder(o), HttpStatus.OK);
-		
-	}
+//	@PostMapping("/submit/{userId}")
+//	public ResponseEntity<Order> submitNewOrder(@RequestBody Order o, @PathVariable int userId) {
+//		
+//		User u = us.getUser(userId);
+//		if(u == null) {
+//			throw new UnauthenticatedException();
+//		}
+//		if (!o.getOrderCustomer().equals(u)) {
+//				
+//			throw new UrlMismatchException();
+//			
+//		}
+//		return new ResponseEntity<Order>(os.addOrder(o), HttpStatus.OK);
+//		
+//	}
 	
 	@GetMapping("/history/pending/{userId}")
 	@Transactional
@@ -108,14 +108,12 @@ public class OrderController {
 		
 	}
 	
-	@PostMapping("/submit/{orderId}/{userId}")
-	public ResponseEntity<Order> submitOrder(@RequestBody Order o, @PathVariable int orderId, @PathVariable int userId) {
+	@PostMapping("/submit/{userId}")
+	public ResponseEntity<Order> submitOrder(@RequestBody Order o, @PathVariable int userId) {
 		
 		User u = us.getUser(userId);
 		if(u == null) {
 			throw new UnauthenticatedException();
-		} else if (o.getOrderId() != orderId) {
-			throw new UrlMismatchException();
 		} else if (o.getOrderCustomer().getUserId() != u.getUserId()) {
 			throw new UrlMismatchException();
 		}
