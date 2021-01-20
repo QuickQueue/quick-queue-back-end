@@ -1,53 +1,47 @@
-# ERS (Expense Reimbursement System )
+# QuickQueue
 
-The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement.
+### Shop Faster Shop Smarter Shop Safer ###
 
-Reimbursement Types
-Employees must select the type of reimbursement as: LODGING, TRAVEL, FOOD, or OTHER.
+# About This Project
+
+QuickQueue envision's a one-stop shop for all your consumer goods needs. In our current pandemic climate our goal was to build a functional, and practical store that links customers to shoppers and facilitates safe handoffs for all our vital needs. How we aimed to achieve this was simple, we wanted to build a light and snappy SPA(single-page application) that can communicate quickly and efficiently with our back-end and RDS(relational database). We want all our users (whether they're shoppers or customers) to have a refined, responsive, and snappy experience that would encourage them to return.
+
+# How It All Works
+
+Our application utilizes a storefront API which communicates using RESTful conventions with our backend, which is hosted on AWS's (Amazon Web Services) EC2 servers. In turn - our backend utilizes Hibernate and STS (Spring Tool Suite) to communicate with a PostgreSQL RDS we also host on AWS.
+
+All this comes together in our frontend which is built using React. Our two distinct API's meet here and communicate through standard HTTP protocols. We encrypt all our users logins as well as ensure all endpoints are distinct and cannot be compromised. 
+
+# Technologies Used
+
+ ### Back-End ###
+ QuickQueue's back-end is a Java built application also utilizing:
+  - Maven
+  - Spring Tool Suite (Spring MVC)
+  - Hibernate and JPA (Java Persistence API)
+  
+ ### Front-End ###
+ On the Frontend we used React with:
+  - React Hooks
+  - Axios
+  - Typescript
+  - Material UI
+  
+ ### Additional Technology
+ In addition we made use of:
+  - AWS RDS and EC2 hosting
+  - Docker
+  - Git and GitHub
+  - Node JS and NPM (Node Package Manager)
+
+# Usage
+
+To utilize the application simply visit our live-hosted endpoint at: http://ec2-18-218-116-207.us-east-2.compute.amazonaws.com/login
+
+Additionally you may clone the front-end repository. Once done, run an 'npm install' in your terminal to locally install all dependencies. Once your dependencies are installed you can execute 'npm start' to launch QuickQueue as a locally hosted React app.
+
+# Contributors
+
+Application designed, coded, and implemented by Aleks Nikolic @aleksdoesit, Kelvin Trih, and Colin Shaw.
 
 
-
-
-
-## Technologies Used
-
--Frontend : Html, CSS, Javascript
--Backend : Java, Maven, Servlet, JDBC, Tomcat
--Database : PostgreSQL
-
-
-
-## Features
--Employee can log into the system.View all submitted request in the past.Create new reimbursment request.
--Finance Manager can log in into the system. View All submitted request.
--finance Manager can filter request based on status :Approved, Pending or Denied.
--Finance Manager can Approve or reject the request
-
-## Getting Started
-
--Clone the project into your desired folder using below command in gitbash.
-```gitbash
-git clone https://github.com/2011Canada/project-1-raviraj845.git
-```
-- Create Postgres database using the script provided in script.sql file.
-- Enter the data into the table. Script to enter the data in table is also provided in script.sql file.
-
-
-## Usage
-
--if you enter the username and password for employee, it will open the Employee Screen.
--on the employee screen , it will show All past request.It also has a button to create new request.
--click on create new request button, it will open a form to submit a new request. fill out the form and click on submit to submit the request.
--Entering username and password for manager will open a manager's screen.
--it will show All the requests submitted by employees. Manager can filter the request based on a status from the selecter.
--Manager click on a a approve or deny the request by pressing the button and it will update the status accordingly.
-
-
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
